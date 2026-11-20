@@ -15,3 +15,7 @@ Then open http://localhost:8765. Opening `index.html` directly from disk won't w
 ```bash
 python3 mirror.py public
 ```
+
+## SEO
+
+After re-running `mirror.py`, run `python3 seo.py` to re-apply titles, descriptions, sitemap, robots.txt and llms.txt.
