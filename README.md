@@ -1,6 +1,15 @@
-# Sahil Portfolio
+# Sahil Pednekar — Portfolio
 
-Local copy of https://sahil.framer.website/ (home and `/friends`) with all assets saved under `public/`.
+Personal portfolio for [sahildesign.xyz](https://sahildesign.xyz). Plain HTML, CSS and a little JavaScript — no framework, no build step.
+
+```
+public/
+  index.html          home
+  friends/index.html  friends list
+  css/style.css       all styles
+  js/main.js          scramble text, GitHub grid, copy-email button
+  fonts/ images/ media/
+```
 
 ## Run locally
 
@@ -8,14 +17,8 @@ Local copy of https://sahil.framer.website/ (home and `/friends`) with all asset
 python3 -m http.server 8765 -d public
 ```
 
-Then open http://localhost:8765. Opening `index.html` directly from disk won't work, because browsers block the module scripts on `file://`.
+Then open http://localhost:8765.
 
-## Refresh from Framer
+## Deploy
 
-```bash
-python3 mirror.py public
-```
-
-## SEO
-
-After re-running `mirror.py`, run `python3 seo.py` to re-apply titles, descriptions, sitemap, robots.txt and llms.txt.
+Hosted on Cloudflare Workers (static assets, see `wrangler.jsonc`). Every push to `main` deploys automatically.

@@ -10,7 +10,7 @@
 ## Pages
 - [Home](https://sahildesign.xyz/): portfolio, experience, projects and contact
 - [Friends](https://sahildesign.xyz/friends/): designers, engineers and artists Sahil recommends for hire
-- [Resume (PDF)](https://sahildesign.xyz/assets/framerusercontent.com/assets/gsjZC3sBltDujOYszjMr9CqbVGQ.pdf)
+- [Resume (PDF)](https://sahildesign.xyz/sahil-pednekar-resume.pdf)
 
 ## Elsewhere
 - X / Twitter: https://x.com/sahil_pednekar3
