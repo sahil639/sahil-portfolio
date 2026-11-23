@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import WorkCard from "../components/WorkCard.astro";
+import Lightbox from "../components/Lightbox.astro";
+const items = (await getCollection("sandbox")).sort((a, b) => b.data.date - a.data.date);
+const isImage = (h = "") => /\.(jpe?g|png|webp|gif|avif)$/i.test(h);
+---
+<Base title="Sandbox — Interactive experiments by Sahil Pednekar" description="Interactive pieces, motion studies and graphic experiments by Sahil Pednekar." current="sandbox">
+  <section class="blog-hero sandbox-hero">
+    <h1>Sandbox</h1>
+    <div class="intro">
+      <p>Interactive pieces, <b>motion studies and graphic experiments</b>. Things I make to learn, or just for fun.</p>
+    </div>
+  </section>
+
+  <section class="cards work-grid sandbox-grid">
+    {items.map(({ data }) => (
+      <WorkCard title={data.title} description={data.description} badge={data.kind.toUpperCase()} image={data.thumbnail} href={data.href} lightbox={isImage(data.href)} />
+    ))}
+  </section>
+
+  <p class="the-end">More experiments soon.</p>
+  <Lightbox />
+</Base>

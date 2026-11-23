@@ -1,0 +1,25 @@
+---
+import Base from "../layouts/Base.astro";
+import Lightbox from "../components/Lightbox.astro";
+import { getExtras } from "../lib/extras.js";
+const extras = await getExtras();
+---
+<Base title="Extras — Graphics by Sahil Pednekar" description="A gallery of extra graphics, posters and visual experiments by Sahil Pednekar." current="extras">
+  <section class="blog-hero extras-hero">
+    <h1>Extras</h1>
+    <div class="intro">
+      <p>Graphics, posters and <b>visual odds and ends</b> made along the way. Click any image to see it full size.</p>
+    </div>
+  </section>
+
+  <section class="extras-grid">
+    {extras.map((x) => (
+      <a class="extra" href={x.src} data-lightbox data-caption={x.caption}>
+        <img src={x.src} alt={x.caption} width={x.width} height={x.height} loading="lazy" decoding="async" />
+      </a>
+    ))}
+  </section>
+
+  <p class="the-end">That's it. You scrolled to the bottom. Now what?</p>
+  <Lightbox />
+</Base>

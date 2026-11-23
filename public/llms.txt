@@ -9,7 +9,9 @@
 
 ## Pages
 - [Home](https://sahildesign.xyz/): portfolio, experience, projects and contact
-- [Friends](https://sahildesign.xyz/friends/): designers, engineers and artists Sahil recommends for hire
+- [Blog](https://sahildesign.xyz/blog/): notes on product design, interaction, motion, coffee and travel
+- [Extras](https://sahildesign.xyz/extras/): gallery of extra graphics and posters
+- [Sandbox](https://sahildesign.xyz/sandbox/): interactive pieces and graphic experiments
 - [Resume (PDF)](https://sahildesign.xyz/sahil-pednekar-resume.pdf)
 
 ## Elsewhere

@@ -15,4 +15,17 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+// Sandbox: one .yaml file per item in /content/sandbox/ (or use the editor at /keystatic).
+const sandbox = defineCollection({
+  loader: glob({ base: "./content/sandbox", pattern: "**/[^_]*.{yaml,yml}" }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    kind: z.enum(["interactive", "graphic"]).default("interactive"),
+    description: z.string().default(""),
+    thumbnail: z.string().optional(),
+    href: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, sandbox };

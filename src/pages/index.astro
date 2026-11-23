@@ -1,7 +1,15 @@
 ---
 import PostRow from "../components/PostRow.astro";
+import WorkCard from "../components/WorkCard.astro";
+import Lightbox from "../components/Lightbox.astro";
+import { getCollection } from "astro:content";
 import { getPosts } from "../lib/posts.js";
+import { getExtras } from "../lib/extras.js";
+import { projects, more } from "../data/home.js";
 const latest = (await getPosts()).slice(0, 3);
+const extras = await getExtras();
+const sandbox = (await getCollection("sandbox")).sort((a, b) => b.data.date - a.data.date);
+const isImage = (h = "") => /\.(jpe?g|png|webp|gif|avif)$/i.test(h);
 ---
 <!doctype html>
 <html lang="en">
@@ -73,7 +81,6 @@ const latest = (await getPosts()).slice(0, 3);
         </button>
         <p>Want to chat either way?<br>Send me an email.</p>
       </div>
-      <p class="hire">OR YOU CAN <a href="/friends/">HIRE MY FRIENDS</a></p>
     </section>
 
     <section class="work" aria-label="Experience">
@@ -127,20 +134,36 @@ const latest = (await getPosts()).slice(0, 3);
 
     <section class="projects" id="projects">
       <h2 class="label section-title">PROJECTS</h2>
-      <a class="btn-line" href="https://www.figma.com/design/i8iv2aI2uny1hrtIKsFRov/Design---Portfolio?node-id=15-6355&amp;t=Xzk8yYWJwNLlJxc8-0" target="_blank" rel="noopener">Temp Figma link &nbsp;-&gt;</a>
-      <div class="cards">
-        <article class="card">
-          <h3 class="scramble-title" data-scramble="Getting Started" data-speed="249" data-chars="8">Getting Started</h3>
-          <span class="badge">SOON</span>
-          <p class="scramble-desc" data-scramble="Reimagine this classic MSN Messenger buddy" data-speed="250" data-chars="4">Reimagine this classic MSN Messenger buddy</p>
-        </article>
-        <article class="card">
-          <h3 class="scramble-title" data-scramble="Getting Started" data-speed="249" data-chars="8">Getting Started</h3>
-          <span class="badge">SOON</span>
-          <p class="scramble-desc" data-scramble="Reimagine this classic MSN Messenger buddy" data-speed="250" data-chars="4">Reimagine this classic MSN Messenger buddy</p>
-        </article>
+      <div class="cards work-grid">
+        {projects.map((p) => <WorkCard {...p} />)}
       </div>
-      <span class="btn-line muted">MORE PROJECTS -&gt;</span>
+    </section>
+
+    <section class="more" id="more">
+      <h2 class="label section-title">MORE FROM ME</h2>
+      <div class="cards work-grid">
+        {more.map((p) => <WorkCard {...p} />)}
+      </div>
+    </section>
+
+    <section class="extras" id="extras">
+      <h2 class="label section-title">EXTRAS</h2>
+      <p class="section-note">Posters, graphics and visual odds and ends.</p>
+      <a class="extras-strip" href="/extras/" aria-label="See all extra graphics">
+        {extras.slice(0, 4).map((x) => <img src={x.src} alt="" loading="lazy" decoding="async" width={x.width} height={x.height} />)}
+      </a>
+      <a class="btn-line" href="/extras/">SEE ALL GRAPHICS &nbsp;-&gt;</a>
+    </section>
+
+    <section class="sandbox" id="sandbox">
+      <h2 class="label section-title">SANDBOX</h2>
+      <p class="section-note">Interactive pieces and graphic experiments.</p>
+      <div class="cards work-grid">
+        {sandbox.slice(0, 4).map(({ data }) => (
+          <WorkCard title={data.title} description={data.description} badge={data.kind.toUpperCase()} image={data.thumbnail} href={data.href} lightbox={isImage(data.href)} />
+        ))}
+      </div>
+      <a class="btn-line" href="/sandbox/">OPEN THE SANDBOX &nbsp;-&gt;</a>
     </section>
 
     <section class="contrib" data-github="sahil639" data-year="2026" aria-label="GitHub contributions">
@@ -151,10 +174,10 @@ const latest = (await getPosts()).slice(0, 3);
       <p class="mark" aria-hidden="true">⌘</p>
       <p class="label copy">Sahil Pednekar 2026</p>
       <a class="resume" href="/sahil-pednekar-resume.pdf" target="_blank" rel="noopener">Downloadable Resume</a>
-      <video class="footer-video" src="/media/footer.mp4" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
     </footer>
 
   </main>
+  <Lightbox />
   <script is:inline src="/js/main.js" defer></script>
 </body>
 </html>

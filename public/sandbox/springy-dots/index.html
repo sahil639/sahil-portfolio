@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Springy Dots — Sandbox</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+    canvas { display: block; width: 100vw; height: 100vh; touch-action: none; }
+    a { position: fixed; top: 20px; left: 20px; font: 14px/1 ui-monospace, Menlo, monospace; color: #52ff9d; text-decoration: none; border-bottom: 1px solid #52ff9d; padding-bottom: 4px; }
+    p { position: fixed; bottom: 20px; left: 20px; margin: 0; font: 12px/1.4 ui-monospace, Menlo, monospace; color: #575757; }
+  </style>
+</head>
+<body>
+  <canvas></canvas>
+  <a href="/sandbox/">← SANDBOX</a>
+  <p>Move your cursor (or finger) through the dots.</p>
+  <script>
+    const c = document.querySelector("canvas"), x = c.getContext("2d");
+    const GAP = 28, R = 120, K = 0.08, D = 0.82;
+    let dots = [], mx = -1e4, my = -1e4, dpr = 1;
+    function setup() {
+      dpr = devicePixelRatio || 1;
+      c.width = innerWidth * dpr; c.height = innerHeight * dpr;
+      dots = [];
+      for (let y = GAP / 2; y < innerHeight; y += GAP)
+        for (let xx = GAP / 2; xx < innerWidth; xx += GAP) dots.push({ ox: xx, oy: y, x: xx, y, vx: 0, vy: 0 });
+    }
+    function frame() {
+      x.setTransform(dpr, 0, 0, dpr, 0, 0);
+      x.clearRect(0, 0, innerWidth, innerHeight);
+      for (const d of dots) {
+        const dx = d.x - mx, dy = d.y - my, dist = Math.hypot(dx, dy);
+        if (dist < R) { const f = (1 - dist / R) * 6; d.vx += (dx / (dist || 1)) * f; d.vy += (dy / (dist || 1)) * f; }
+        d.vx = (d.vx + (d.ox - d.x) * K) * D; d.vy = (d.vy + (d.oy - d.y) * K) * D;
+        d.x += d.vx; d.y += d.vy;
+        const moved = Math.min(1, Math.hypot(d.x - d.ox, d.y - d.oy) / 30);
+        x.fillStyle = moved > 0.05 ? `rgba(82,255,157,${0.35 + moved * 0.65})` : "#2e2e2e";
+        x.beginPath(); x.arc(d.x, d.y, 2 + moved * 1.5, 0, 6.283); x.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+    addEventListener("pointermove", (e) => { mx = e.clientX; my = e.clientY; });
+    addEventListener("pointerleave", () => { mx = my = -1e4; });
+    addEventListener("resize", setup);
+    setup(); frame();
+  </script>
+</body>
+</html>

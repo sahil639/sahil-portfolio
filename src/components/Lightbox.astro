@@ -1,0 +1,38 @@
+---
+// Opens any <a data-lightbox href="image.jpg"> full size. Arrow keys / buttons move between images, Esc closes.
+---
+<dialog class="lightbox" aria-label="Image viewer">
+  <img alt="" />
+  <p class="lb-caption"></p>
+  <button class="lb-btn lb-close" type="button" aria-label="Close">✕</button>
+  <button class="lb-btn lb-prev" type="button" aria-label="Previous image">←</button>
+  <button class="lb-btn lb-next" type="button" aria-label="Next image">→</button>
+</dialog>
+<script is:inline>
+  (() => {
+    const dlg = document.querySelector("dialog.lightbox");
+    const img = dlg.querySelector("img"), cap = dlg.querySelector(".lb-caption");
+    const links = [...document.querySelectorAll("a[data-lightbox]")];
+    let i = 0;
+    const show = (n) => {
+      i = (n + links.length) % links.length;
+      const a = links[i];
+      img.src = a.href;
+      img.alt = a.dataset.caption || "";
+      cap.textContent = a.dataset.caption || "";
+      dlg.classList.toggle("single", links.length < 2);
+    };
+    links.forEach((a, n) => a.addEventListener("click", (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault(); show(n); dlg.showModal();
+    }));
+    dlg.querySelector(".lb-close").onclick = () => dlg.close();
+    dlg.querySelector(".lb-prev").onclick = () => show(i - 1);
+    dlg.querySelector(".lb-next").onclick = () => show(i + 1);
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") show(i - 1);
+      if (e.key === "ArrowRight") show(i + 1);
+    });
+  })();
+</script>

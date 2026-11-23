@@ -5,10 +5,15 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkBlog from "./src/plugins/remark-blog.mjs";
 import { unified } from "@astrojs/markdown-remark";
+import react from "@astrojs/react";
+import keystatic from "@keystatic/astro";
+
+// The Keystatic editor only runs locally (npm run dev). The live site stays fully static.
+const isDev = process.argv.includes("dev");
 
 export default defineConfig({
   site: "https://sahildesign.xyz",
-  trailingSlash: "always",
+  trailingSlash: isDev ? "ignore" : "always", // the editor needs "ignore"
   build: { format: "directory" },
   devToolbar: { enabled: false },
   integrations: [
@@ -47,6 +52,7 @@ export default defineConfig({
       },
     }),
     mdx(),
+    ...(isDev ? [react(), keystatic()] : []),
   ],
   markdown: {
     processor: unified({

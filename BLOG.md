@@ -1,6 +1,18 @@
 # Writing a blog post
 
-## Quick version
+## Easiest: the editor
+
+1. Run `npm run dev`
+2. Open http://127.0.0.1:8765/keystatic → **Blog posts** → **Add** (or open a post)
+3. Write. Use the **+** button in the toolbar for images, galleries, callouts, link cards and embeds.
+4. Keep the post open in another tab (http://127.0.0.1:8765/blog/your-post/). It refreshes every time you click **Save** (or press ⌘S).
+5. Untick **Draft** when it's ready, save, then commit and push.
+
+The editor only exists on your computer. It is not part of the live site.
+Tip: the editor rewrites files in its own tidy style (quotes, lists). That's normal.
+Images you upload while it's running show at full size in the preview. The fast, resized copies are made the next time `npm run dev` or the live build runs.
+
+## Quick version (by hand)
 
 1. Copy `content/blog/_template.mdx` → `content/blog/my-post.mdx`
    (the file name is the web address: `sahildesign.xyz/blog/my-post/`. Use lowercase and dashes.)
@@ -154,3 +166,12 @@ http://localhost:8765/blog/style-guide/ to see how things look.
 
 Commit and push to `main`. Cloudflare builds and deploys the site automatically, usually within a minute.
 Posts with `draft: true` are left out of the live site, the RSS feed (`/blog/rss.xml`) and the sitemap.
+
+## Homepage, Extras and Sandbox
+
+- **Projects / More from me cards:** edit `src/data/home.js`; images in `public/images/projects/` and `public/images/more/`.
+- **Extras page (/extras/):** drop images into `public/extras/`. They show in file-name order, and the file name becomes the caption (`03-summer-poster.jpg` → "summer poster"). Delete the `graphic-XX.jpg` placeholders.
+- **Sandbox (/sandbox/):** add an item in the editor (**Sandbox** → **Add**) or add a `.yaml` file to `content/sandbox/`.
+  - Interactive piece: put its files in `public/sandbox/<name>/` (an `index.html` plus anything it needs) and set the link to `/sandbox/<name>/index.html`. `springy-dots` is a working example.
+  - Graphic: set the link to the image, and it opens full size.
+- **Archived things** (Friends page, footer video, old project cards): see `archive/README.md`.

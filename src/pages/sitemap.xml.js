@@ -7,7 +7,8 @@ export async function GET() {
   const latest = posts[0] ? isoDate(posts[0].data.date) : undefined;
   const rows = [
     { loc: `${SITE}/` },
-    { loc: `${SITE}/friends/` },
+    { loc: `${SITE}/extras/` },
+    { loc: `${SITE}/sandbox/` },
     { loc: `${SITE}/blog/`, lastmod: latest },
     ...posts.map((p) => ({ loc: `${SITE}/blog/${p.id}/`, lastmod: isoDate(p.data.date) })),
   ];

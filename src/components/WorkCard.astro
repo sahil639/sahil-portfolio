@@ -1,0 +1,32 @@
+---
+// A project-style card (Projects, More from me, Sandbox). Same look as the original homepage cards.
+interface Props {
+  title: string;
+  description?: string;
+  role?: string;
+  year?: string;
+  badge?: string;
+  tags?: string[];
+  image?: string;
+  href?: string;
+  lightbox?: boolean; // open href (an image) full size instead of navigating
+}
+const { title, description, role, year, badge, tags = [], image, href, lightbox = false } = Astro.props;
+const external = href?.startsWith("http");
+const Tag = href ? "a" : "article";
+const linkProps = !href ? {} : lightbox ? { href, "data-lightbox": "", "data-caption": title } : { href, ...(external ? { target: "_blank", rel: "noopener" } : {}) };
+---
+<Tag class={`card work-card${href ? " is-link" : ""}`} {...linkProps}>
+  {image && <img class="thumb" src={image} alt="" loading="lazy" decoding="async" width="1200" height="750" />}
+  <div class="work-head">
+    <h3 class="title">{title}</h3>
+    {(badge ?? year) && <span class="badge">{badge ?? year}</span>}
+  </div>
+  {description && <p class="desc">{description}</p>}
+  {(role || tags.length > 0) && (
+    <p class="work-meta">
+      {role && <span class="role">{role}</span>}
+      {tags.map((t) => <span class="tag-chip">{t}</span>)}
+    </p>
+  )}
+</Tag>
