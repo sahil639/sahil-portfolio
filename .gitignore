@@ -9,3 +9,4 @@ dist/
 .wrangler/
 public/_img/
 src/data/images.json
+package-lock.json
