@@ -22,3 +22,9 @@ Then open http://localhost:8765.
 ## Deploy
 
 Hosted on Cloudflare Workers (static assets, see `wrangler.jsonc`). Every push to `main` deploys automatically.
+
+## Blog
+
+1. Add a Markdown file to `blog/posts/` (copy `example-post.md`; the file name becomes the URL).
+2. Run `python3 blog/build.py` (add `--drafts` to preview posts marked `draft: true`).
+3. Commit and push. Images for posts go in `public/images/blog/`.
