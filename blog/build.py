@@ -183,6 +183,11 @@ def head(title, description, url, kind="website", extra=""):
   <meta property="og:description" content="{d}">
   <meta property="og:url" content="{url}">
   <meta property="og:image" content="{SITE}/images/og.png">
+  <meta property="og:video" content="{SITE}/media/og.mp4">
+  <meta property="og:video:secure_url" content="{SITE}/media/og.mp4">
+  <meta property="og:video:type" content="video/mp4">
+  <meta property="og:video:width" content="1200">
+  <meta property="og:video:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:creator" content="@sahil_pednekar3">
   <meta name="twitter:title" content="{t}">
