@@ -1,0 +1,29 @@
+{
+  "name": "sahil-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/images.mjs && astro dev --port 8765",
+    "build": "node scripts/images.mjs && astro build",
+    "preview": "wrangler dev --port 8765"
+  },
+  "dependencies": {
+    "@astro-community/astro-embed-twitter": "^0.5.11",
+    "@astro-community/astro-embed-youtube": "^0.5.10",
+    "@astrojs/markdown-remark": "^7.3.10",
+    "@astrojs/mdx": "^8.1.6",
+    "@astrojs/rss": "^4.0.19",
+    "astro": "^7.4.13",
+    "astro-expressive-code": "^0.44.4",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-slug": "^6.0.0",
+    "sharp": "^0.35.5",
+    "unist-util-visit": "^5.2.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.166.0"
+  },
+  "engines": {
+    "node": ">=22.23.4"
+  }
+}

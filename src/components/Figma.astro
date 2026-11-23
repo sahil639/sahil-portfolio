@@ -1,0 +1,10 @@
+---
+// <Figma url="https://www.figma.com/design/..." caption="..." />
+interface Props { url: string; caption?: string; height?: number }
+const { url, caption, height = 450 } = Astro.props;
+const src = `https://embed.figma.com/${url.includes("/proto/") ? "proto" : "design"}/${url.split("figma.com/").pop()?.replace(/^(design|file|proto)\//, "")}${url.includes("?") ? "&" : "?"}embed-host=share`;
+---
+<figure class="embed figma">
+  <iframe src={src} title={caption ?? "Figma file"} loading="lazy" style={`height:${height}px`} allowfullscreen></iframe>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

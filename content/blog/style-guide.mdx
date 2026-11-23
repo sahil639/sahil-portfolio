@@ -1,0 +1,92 @@
+---
+title: "Style guide — every blog component"
+date: 2026-11-20
+summary: "A hidden test post showing everything a post can do. Only visible on localhost."
+cover: /blog/style-guide/sample.png
+tags: [design, meta]
+draft: true
+---
+
+This post is a **draft**, so it only shows when you run the site on your computer. It's a live preview of every component in `BLOG.md`.
+
+## Text
+
+Normal paragraph with **bold**, *italic*, `inline code`, an [internal link](/friends/) and an [external link](https://github.com/sahil639) that opens in a new tab.
+
+### A smaller heading
+
+- Bullet one
+- Bullet two
+  with a second line
+
+1. Numbered one
+2. Numbered two
+
+> A blockquote. Good for a line you want to stand out.
+
+## Images
+
+![Full-width image with a caption](/blog/style-guide/sample.png "Full width — a caption sits underneath")
+
+<Img src="/blog/style-guide/sample.png" alt="Wide image" caption="Wide — breaks out of the text column on desktop" size="wide" />
+
+<Img src="/blog/style-guide/sample.png" alt="Inline image" caption="Inline — sits on the right, text wraps" size="inline" />
+
+An inline image floats to the side so text can wrap around it on desktop. On phones it goes full width. Keep writing here and the paragraph flows next to the picture, which is nice for small details, screenshots of a single button, or a portrait photo next to a quote.
+
+<Gallery caption="Gallery — two or three images side by side">
+  <Img src="/blog/style-guide/sample.png" alt="One" />
+  <Img src="/blog/style-guide/sample.png" alt="Two" />
+  <Img src="/blog/style-guide/sample.png" alt="Three" />
+</Gallery>
+
+## Callouts
+
+<Callout type="note">A note — neutral extra info.</Callout>
+
+<Callout type="tip" title="Pro tip">A tip — with a custom title.</Callout>
+
+<Callout type="warning">A warning — something to watch out for.</Callout>
+
+## Code
+
+```js title="spring.js" {2-3}
+export function spring(from, to, t) {
+  const k = 170, d = 26; // highlighted
+  return to + (from - to) * Math.exp(-d * t) * Math.cos(k * t); // highlighted
+}
+```
+
+```css
+.button:hover { transform: scale(1.02); }
+```
+
+```bash
+npm run dev
+```
+
+## Table
+
+| Easing | Feels like | Use for |
+| --- | --- | --- |
+| ease-out | Snappy | Entering things |
+| ease-in | Heavy | Leaving things |
+| spring | Alive | Drag and release |
+
+## Link preview card
+
+https://github.com/sahil639
+
+<LinkCard url="https://sahildesign.xyz/friends/" title="Hire my friends" description="A manual card with your own title and description." />
+
+## Embeds
+
+<YouTube id="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
+
+<Tweet id="https://x.com/vercel/status/1683920951807971329" />
+
+<Figma url="https://www.figma.com/design/i8iv2aI2uny1hrtIKsFRov/Design---Portfolio?node-id=15-6355" caption="A Figma file" />
+
+---
+
+That line above is a divider. End of the style guide.

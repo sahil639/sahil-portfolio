@@ -1,0 +1,46 @@
+---
+import Base from "../../layouts/Base.astro";
+import PostRow from "../../components/PostRow.astro";
+import { getPosts } from "../../lib/posts.js";
+
+const posts = await getPosts();
+const tags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+---
+<Base title="Blog — Sahil Pednekar" description="Notes on product design, interaction design, motion — and coffee, travel and other things — by Sahil Pednekar." current="blog">
+  <section class="blog-hero">
+    <h1>Blog</h1>
+    <div class="intro">
+      <p>Notes on <b>product design, interaction and motion</b> — plus coffee, travel and whatever else I'm into.</p>
+    </div>
+  </section>
+
+  {tags.length > 0 && (
+    <div class="filters tag-filters" role="group" aria-label="Filter posts by tag">
+      <button class="chip" type="button" data-tag="" aria-pressed="true">Everything</button>
+      {tags.map((t) => <button class="chip" type="button" data-tag={t} aria-pressed="false">#{t}</button>)}
+    </div>
+  )}
+
+  <section class="post-list">
+    {posts.length ? posts.map((p) => <PostRow post={p} />) : <p class="empty">First post coming soon.</p>}
+  </section>
+
+  <p class="the-end">That's it. You scrolled to the bottom. Now what?</p>
+
+  <script is:inline>
+    (() => {
+      const chips = [...document.querySelectorAll(".tag-filters .chip")];
+      const rows = [...document.querySelectorAll(".post-list .post-row")];
+      const apply = (tag) => {
+        chips.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.tag === tag)));
+        rows.forEach((r) => { r.hidden = !!tag && !r.dataset.tags.split(",").includes(tag); });
+        const u = new URL(location.href);
+        tag ? u.searchParams.set("tag", tag) : u.searchParams.delete("tag");
+        history.replaceState(null, "", u);
+      };
+      chips.forEach((c) => c.addEventListener("click", () => apply(c.dataset.tag)));
+      const start = new URLSearchParams(location.search).get("tag");
+      if (start && chips.some((c) => c.dataset.tag === start)) apply(start);
+    })();
+  </script>
+</Base>

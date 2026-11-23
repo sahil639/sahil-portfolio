@@ -1,0 +1,160 @@
+---
+import PostRow from "../components/PostRow.astro";
+import { getPosts } from "../lib/posts.js";
+const latest = (await getPosts()).slice(0, 3);
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sahil Pednekar — Product Designer &amp; Interaction Designer</title>
+  <meta name="description" content="Sahil Pednekar is a product designer focused on interaction design, building responsive, motion-driven apps at the intersection of design and engineering.">
+  <meta name="author" content="Sahil Pednekar">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="https://sahildesign.xyz/">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="preload" href="/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ark-es.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/fonts/audio-junglism.woff2" as="font" type="font/woff2" crossorigin>
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Sahil Pednekar">
+  <meta property="og:title" content="Sahil Pednekar — Product Designer &amp; Interaction Designer">
+  <meta property="og:description" content="Sahil Pednekar is a product designer focused on interaction design, building responsive, motion-driven apps at the intersection of design and engineering.">
+  <meta property="og:url" content="https://sahildesign.xyz/">
+  <meta property="og:image" content="https://sahildesign.xyz/images/og.png">
+  <meta property="og:video" content="https://sahildesign.xyz/media/og.mp4">
+  <meta property="og:video:secure_url" content="https://sahildesign.xyz/media/og.mp4">
+  <meta property="og:video:type" content="video/mp4">
+  <meta property="og:video:width" content="1200">
+  <meta property="og:video:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@sahil_pednekar3">
+  <meta name="twitter:title" content="Sahil Pednekar — Product Designer &amp; Interaction Designer">
+  <meta name="twitter:description" content="Sahil Pednekar is a product designer focused on interaction design, building responsive, motion-driven apps at the intersection of design and engineering.">
+  <meta name="twitter:image" content="https://sahildesign.xyz/images/og.png">
+
+  <script is:inline type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"Person","@id":"https://sahildesign.xyz/#person","name":"Sahil Pednekar","url":"https://sahildesign.xyz/","image":"https://sahildesign.xyz/images/og.png","jobTitle":"Product Designer","description":"Product designer focused on interaction design, building responsive, motion-driven apps at the intersection of design and engineering.","knowsAbout":["Product Design","Interaction Design","Motion Design","UI/UX Design","Design Engineering"],"sameAs":["https://x.com/sahil_pednekar3","https://github.com/sahil639","https://farcaster.xyz/quminsoda"]},
+    {"@type":"WebSite","@id":"https://sahildesign.xyz/#website","url":"https://sahildesign.xyz/","name":"Sahil Pednekar","publisher":{"@id":"https://sahildesign.xyz/#person"}}
+  ]}
+  </script>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="alternate" type="application/rss+xml" title="Sahil Pednekar — Blog" href="https://sahildesign.xyz/blog/rss.xml">
+</head>
+<body>
+  <main class="page">
+
+    <section class="hero">
+      <video class="hero-video" src="/media/chick.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+      <div class="brand">
+        <h1 class="logo">SAHIL<span class="sr-only"> Pednekar</span></h1>
+        <span class="handle">/ @sahil_pednekar3</span>
+      </div>
+      <h2 class="headline">product designer<br>focused on interaction design.</h2>
+      <div class="intro">
+        <p>Building <b>responsive, motion-driven apps</b> that think and feel like a natural part of you. Every animation serves purpose, every interaction flows.</p>
+        <p>I operate at the intersection of <b>design and engineering,</b> blending creativity with systems thinking to deliver products that <em>feel effortless</em> and <em>look impossible</em>.</p>
+      </div>
+    </section>
+
+    <section class="contact">
+      <p class="status">Currently taking on new work.</p>
+      <div class="actions">
+        <a class="icon-btn" href="mailto:sahilpednekar332000@gmail.com" aria-label="Email Sahil">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+        </a>
+        <button class="icon-btn" type="button" data-copy="sahilpednekar332000@gmail.com" aria-label="Copy email address">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span class="tip" role="status">Email copied</span>
+        </button>
+        <p>Want to chat either way?<br>Send me an email.</p>
+      </div>
+      <p class="hire">OR YOU CAN <a href="/friends/">HIRE MY FRIENDS</a></p>
+    </section>
+
+    <section class="work" aria-label="Experience">
+      <a class="job now" href="https://www.capx.ai/" target="_blank" rel="noopener">
+        <div class="track"></div>
+        <div class="co"><img src="/images/work/capx.png" alt="" width="28" height="28"><span>CAPX</span></div>
+        <p class="years">2024 - 2026</p>
+      </a>
+      <a class="job now" href="https://www.capx.ai/" target="_blank" rel="noopener">
+        <div class="track"></div>
+        <div class="co"><img src="/images/work/one-click.png" alt="" width="28" height="28"><span>One Click</span></div>
+        <p class="years">2024 - NOW</p>
+      </a>
+      <a class="job" href="https://questbook.app/" target="_blank" rel="noopener">
+        <div class="track"></div>
+        <div class="co"><img src="/images/work/questbook.png" alt="" width="28" height="28"><span>Questbook</span></div>
+        <p class="years">2023</p>
+      </a>
+      <a class="job" href="https://dehidden.com/" target="_blank" rel="noopener">
+        <div class="track"></div>
+        <div class="co"><img src="/images/work/dehidden.png" alt="" width="28" height="28"><span>Dehidden</span></div>
+        <p class="years">2022-2023</p>
+      </a>
+      <a class="job" href="https://zelta.io/" target="_blank" rel="noopener">
+        <div class="track"></div>
+        <div class="co"><img src="/images/work/zelta.png" alt="" width="28" height="28"><span>ZELTA</span></div>
+        <p class="years">2021 - 2022</p>
+      </a>
+    </section>
+
+    <section class="elsewhere">
+      <h2 class="label section-title">ELSEWHERE</h2>
+      <div class="links">
+        <a class="ulink" href="https://x.com/sahil_pednekar3" target="_blank" rel="noopener">TWITTER</a>
+        <a class="ulink" href="https://github.com/sahil639" target="_blank" rel="noopener">GITHUB</a>
+        <a class="ulink" href="https://t.me/quminsoda" target="_blank" rel="noopener">TELEGRAM</a>
+        <a class="ulink" href="https://farcaster.xyz/quminsoda" target="_blank" rel="noopener">FARCASTER</a>
+        <span class="ens">QUMINSODA.ETH</span>
+      </div>
+    </section>
+
+    {latest.length > 0 && (
+    <section class="writing">
+      <h2 class="label section-title">WRITING</h2>
+      <div class="post-list compact">
+        {latest.map((p) => <PostRow post={p} compact />)}
+      </div>
+      <a class="ulink all" href="/blog/">ALL POSTS</a>
+    </section>
+    )}
+
+    <section class="projects" id="projects">
+      <h2 class="label section-title">PROJECTS</h2>
+      <a class="btn-line" href="https://www.figma.com/design/i8iv2aI2uny1hrtIKsFRov/Design---Portfolio?node-id=15-6355&amp;t=Xzk8yYWJwNLlJxc8-0" target="_blank" rel="noopener">Temp Figma link &nbsp;-&gt;</a>
+      <div class="cards">
+        <article class="card">
+          <h3 class="scramble-title" data-scramble="Getting Started" data-speed="249" data-chars="8">Getting Started</h3>
+          <span class="badge">SOON</span>
+          <p class="scramble-desc" data-scramble="Reimagine this classic MSN Messenger buddy" data-speed="250" data-chars="4">Reimagine this classic MSN Messenger buddy</p>
+        </article>
+        <article class="card">
+          <h3 class="scramble-title" data-scramble="Getting Started" data-speed="249" data-chars="8">Getting Started</h3>
+          <span class="badge">SOON</span>
+          <p class="scramble-desc" data-scramble="Reimagine this classic MSN Messenger buddy" data-speed="250" data-chars="4">Reimagine this classic MSN Messenger buddy</p>
+        </article>
+      </div>
+      <span class="btn-line muted">MORE PROJECTS -&gt;</span>
+    </section>
+
+    <section class="contrib" data-github="sahil639" data-year="2026" aria-label="GitHub contributions">
+      <p class="state">LOADING...</p>
+    </section>
+
+    <footer class="footer">
+      <p class="mark" aria-hidden="true">⌘</p>
+      <p class="label copy">Sahil Pednekar 2026</p>
+      <a class="resume" href="/sahil-pednekar-resume.pdf" target="_blank" rel="noopener">Downloadable Resume</a>
+      <video class="footer-video" src="/media/footer.mp4" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+    </footer>
+
+  </main>
+  <script is:inline src="/js/main.js" defer></script>
+</body>
+</html>

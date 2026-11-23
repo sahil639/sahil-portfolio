@@ -1,0 +1,16 @@
+---
+import { niceDate, isoDate, wordsToMinutes } from "../lib/posts.js";
+import images from "../data/images.json";
+const { post, compact = false } = Astro.props;
+const { title, date, summary, cover, tags, draft } = post.data;
+const thumb = cover && images[cover]?.variants[0]?.[1];
+---
+<a class={`post-row${cover && !compact ? " has-cover" : ""}`} href={`/blog/${post.id}/`} data-tags={tags.join(",")}>
+  {cover && !compact && <img class="cover" src={thumb ?? cover} alt="" loading="lazy" decoding="async" width="160" height="107" />}
+  <span class="body">
+    <span class="meta"><time datetime={isoDate(date)}>{niceDate(date)}</time> · {wordsToMinutes(post.body)} MIN{draft && <span class="draft">DRAFT</span>}</span>
+    <span class="title">{title}</span>
+    {summary && <span class="desc">{summary}</span>}
+    {tags.length > 0 && !compact && <span class="tags">{tags.map((t) => <span class="tag">#{t}</span>)}</span>}
+  </span>
+</a>

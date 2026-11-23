@@ -1,0 +1,43 @@
+---
+// <LinkCard url="https://..." />  — preview card made at build time from the page's title/description/image.
+// A bare link on its own line in a post becomes one automatically.
+interface Props { url: string; title?: string; description?: string }
+const { url } = Astro.props;
+const host = new URL(url).hostname.replace(/^www\./, "");
+
+const cache = (globalThis.__linkCards ??= new Map());
+if (!cache.has(url)) cache.set(url, fetchMeta(url));
+const meta = await cache.get(url);
+const title = Astro.props.title ?? meta.title ?? host;
+const description = Astro.props.description ?? meta.description;
+
+async function fetchMeta(u) {
+  try {
+    const res = await fetch(u, { headers: { "user-agent": "Mozilla/5.0 (compatible; link-preview)" }, signal: AbortSignal.timeout(6000) });
+    const html = (await res.text()).slice(0, 300000);
+    const pick = (...names) => {
+      for (const n of names) {
+        const m = html.match(new RegExp(`<meta[^>]+(?:property|name)=["']${n}["'][^>]*>`, "i"));
+        const c = m?.[0].match(/content=["']([^"']*)["']/i)?.[1];
+        if (c) return decode(c);
+      }
+    };
+    let image = pick("og:image", "twitter:image");
+    if (image) image = new URL(image, u).href;
+    return { title: pick("og:title", "twitter:title") ?? (decode(html.match(/<title[^>]*>([^<]*)/i)?.[1] ?? "") || undefined), description: pick("og:description", "description"), image };
+  } catch {
+    return {};
+  }
+}
+function decode(s) {
+  return s.replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#0?39;|&apos;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").trim();
+}
+---
+<a class="link-card" href={url} target="_blank" rel="noopener">
+  <span class="lc-text">
+    <span class="lc-title">{title}</span>
+    {description && <span class="lc-desc">{description}</span>}
+    <span class="lc-host">{host} ↗</span>
+  </span>
+  {meta.image && <img class="lc-img" src={meta.image} alt="" loading="lazy" decoding="async" />}
+</a>

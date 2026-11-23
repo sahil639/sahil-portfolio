@@ -1,0 +1,17 @@
+---
+// <Img src="/blog/my-post/photo.jpg" alt="..." caption="..." size="full|wide|inline" />
+import images from "../data/images.json";
+
+interface Props { src: string; alt?: string; caption?: string; size?: "full" | "wide" | "inline"; eager?: boolean }
+const { src, alt = "", caption, size = "full", eager = false } = Astro.props;
+const info = images[src];
+const sizes = size === "inline" ? "(max-width: 810px) 50vw, 320px" : size === "wide" ? "(max-width: 810px) 100vw, 900px" : "(max-width: 810px) 100vw, 680px";
+const srcset = info?.variants.map(([w, u]) => `${u} ${w}w`).join(", ");
+---
+<figure class={`img img-${size}`}>
+  <picture>
+    {srcset && <source type="image/webp" srcset={srcset} sizes={sizes} />}
+    <img src={src} alt={alt} width={info?.width} height={info?.height} loading={eager ? "eager" : "lazy"} decoding="async" />
+  </picture>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

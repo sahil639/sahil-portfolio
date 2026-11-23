@@ -1,0 +1,67 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: "website" | "article";
+  wide?: boolean;
+  current?: "blog";
+}
+const SITE = "https://sahildesign.xyz";
+const { title, description, image, type = "website", wide = false, current } = Astro.props;
+const url = new URL(Astro.url.pathname, SITE).href;
+const ogImage = image ? new URL(image, SITE).href : `${SITE}/images/og.png`;
+const ownImage = Boolean(image);
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <meta name="author" content="Sahil Pednekar">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href={url}>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="Sahil Pednekar — Blog" href={`${SITE}/blog/rss.xml`}>
+  <link rel="preload" href="/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ark-es.woff" as="font" type="font/woff" crossorigin>
+  <meta property="og:type" content={type}>
+  <meta property="og:site_name" content="Sahil Pednekar">
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={url}>
+  <meta property="og:image" content={ogImage}>
+  {!ownImage && <>
+    <meta property="og:video" content={`${SITE}/media/og.mp4`}>
+    <meta property="og:video:secure_url" content={`${SITE}/media/og.mp4`}>
+    <meta property="og:video:type" content="video/mp4">
+    <meta property="og:video:width" content="1200">
+    <meta property="og:video:height" content="630">
+  </>}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@sahil_pednekar3">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImage}>
+  <slot name="head" />
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <main class={`page${wide ? " wide" : ""}`}>
+    <header class="topbar">
+      <a class="home" href="/" aria-label="Home">
+        <video src="/media/chick.mp4" autoplay muted loop playsinline aria-hidden="true"></video>
+      </a>
+      <nav>
+        <a class="ulink" href="/blog/" aria-current={current === "blog" ? "page" : undefined}>BLOG</a>
+        <a class="ulink" href="/#projects">PROJECTS</a>
+        <a class="ulink" href="/friends/">FRIENDS</a>
+      </nav>
+    </header>
+    <slot />
+  </main>
+</body>
+</html>

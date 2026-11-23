@@ -1,0 +1,9 @@
+---
+// <Gallery caption="..."> <Img .../> <Img .../> </Gallery>  — 2 or 3 images side by side
+interface Props { caption?: string; cols?: 2 | 3 }
+const { caption, cols } = Astro.props;
+---
+<figure class="gallery" style={cols ? `--cols:${cols}` : undefined}>
+  <div class="gallery-grid"><slot /></div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

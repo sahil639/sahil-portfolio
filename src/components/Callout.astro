@@ -1,0 +1,15 @@
+---
+// <Callout type="note|tip|warning" title="Optional title">Text</Callout>
+interface Props { type?: "note" | "tip" | "warning"; title?: string }
+const { type = "note", title } = Astro.props;
+const label = title ?? { note: "Note", tip: "Tip", warning: "Warning" }[type];
+const icon = {
+  note: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+  tip: '<path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/>',
+  warning: '<path d="m10.3 3.9-8.2 14a2 2 0 0 0 1.7 3h16.4a2 2 0 0 0 1.7-3l-8.2-14a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/>',
+}[type];
+---
+<aside class={`callout callout-${type}`}>
+  <p class="callout-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icon} />{label}</p>
+  <div class="callout-body"><slot /></div>
+</aside>

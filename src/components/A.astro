@@ -1,0 +1,8 @@
+---
+// Every link in a post. Links to other sites open in a new tab.
+const { href = "", ...rest } = Astro.props;
+const external = /^https?:\/\//.test(href) && !href.startsWith("https://sahildesign.xyz");
+---
+{external
+  ? <a href={href} target="_blank" rel="noopener" class="ext" {...rest}><slot /></a>
+  : <a href={href} {...rest}><slot /></a>}
