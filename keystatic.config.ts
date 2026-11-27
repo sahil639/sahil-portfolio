@@ -25,6 +25,8 @@ const Img = block({
   },
 });
 
+const projectImage = (label: string) => fields.image({ label, directory: "public/projects", publicPath: "/projects/" });
+
 export default config({
   storage: { kind: "local" },
   ui: { brand: { name: "Sahil — Blog" } },
@@ -46,6 +48,81 @@ export default config({
         content: fields.mdx({
           label: "Post",
           options: { image: { directory: "public/blog", publicPath: "/blog/" } },
+          components: {
+            Img,
+            Gallery: repeating({
+              label: "Gallery",
+              description: "2–3 images side by side",
+              children: ["Img"],
+              schema: { caption: fields.text({ label: "Caption" }) },
+            }),
+            Callout: wrapper({
+              label: "Callout",
+              description: "Note, tip or warning box",
+              schema: {
+                type: fields.select({
+                  label: "Type",
+                  options: [
+                    { label: "Note", value: "note" },
+                    { label: "Tip", value: "tip" },
+                    { label: "Warning", value: "warning" },
+                  ],
+                  defaultValue: "note",
+                }),
+                title: fields.text({ label: "Title (optional)" }),
+              },
+            }),
+            LinkCard: block({
+              label: "Link preview card",
+              schema: {
+                url: fields.url({ label: "URL", validation: { isRequired: true } }),
+                title: fields.text({ label: "Title (optional — fetched automatically)" }),
+                description: fields.text({ label: "Description (optional)" }),
+              },
+            }),
+            YouTube: block({
+              label: "YouTube video",
+              schema: { id: fields.text({ label: "YouTube link", validation: { length: { min: 1 } } }) },
+            }),
+            Tweet: block({
+              label: "Tweet / X post",
+              schema: { id: fields.text({ label: "Post link", validation: { length: { min: 1 } } }) },
+            }),
+            Figma: block({
+              label: "Figma embed",
+              schema: {
+                url: fields.text({ label: "Figma link", validation: { length: { min: 1 } } }),
+                caption: fields.text({ label: "Caption" }),
+              },
+            }),
+          },
+        }),
+      },
+    }),
+    projects: collection({
+      label: "Projects",
+      path: "content/projects/*",
+      slugField: "title",
+      entryLayout: "content",
+      format: { contentField: "content" },
+      columns: ["title", "group", "order"],
+      schema: {
+        title: fields.slug({ name: { label: "Title" }, slug: { label: "File name / web address" } }),
+        group: fields.select({ label: "Section", options: [{ label: "Projects", value: "work" }, { label: "More from me", value: "more" }], defaultValue: "work" }),
+        order: fields.integer({ label: "Order (1 = first)", defaultValue: 1 }),
+        summary: fields.text({ label: "Summary", multiline: true }),
+        role: fields.text({ label: "Role" }),
+        year: fields.text({ label: "Year" }),
+        timeline: fields.text({ label: "Timeline" }),
+        team: fields.text({ label: "Team" }),
+        tags: fields.array(fields.text({ label: "Tag" }), { label: "Tags", itemLabel: (p) => p.value }),
+        thumbnail: fields.image({ label: "Card image (16:10)", directory: "public/images/projects", publicPath: "/images/projects/" }),
+        cover: projectImage("Cover image"),
+        link: fields.url({ label: "Live link (optional)" }),
+        draft: fields.checkbox({ label: "Draft (hidden on the live site)", defaultValue: false }),
+        content: fields.mdx({
+          label: "Case study",
+          options: { image: { directory: "public/projects", publicPath: "/projects/" } },
           components: {
             Img,
             Gallery: repeating({

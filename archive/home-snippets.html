@@ -26,3 +26,20 @@
       <span class="btn-line muted">MORE PROJECTS -&gt;</span>
     </section>
 
+
+<!-- 4. Original hero intro (replaced 2026-11-23) -->
+<div class="intro">
+        <p>Building <b>responsive, motion-driven apps</b> that think and feel like a natural part of you. Every animation serves purpose, every interaction flows.</p>
+        <p>I operate at the intersection of <b>design and engineering,</b> blending creativity with systems thinking to deliver products that <em>feel effortless</em> and <em>look impossible</em>.</p>
+
+<!-- 5. More from me as cards (replaced 2026-11-27). Needs `const more = (await getProjects("more")).map(toCard);` -->
+    <section class="more" id="more">
+      <h2 class="label section-title">MORE FROM ME</h2>
+      <div class="cards work-grid">
+        {more.map((p) => <WorkCard {...p} />)}
+      </div>
+    </section>
+
+<!-- 6. Plain two-paragraph intro (replaced 2026-11-27) -->
+<p>I'm a product designer working on <b>mobile and web apps</b>, mostly in fintech and web3. I care about small interaction details that make things easy.</p>
+        <p>I <b>work closely with engineers</b> and prototype motion myself, so ideas are easier to test, share, and build. I aim for interfaces that feel <em>clear, calm and useful</em>.</p>

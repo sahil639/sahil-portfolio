@@ -1,5 +1,5 @@
 // Makes smaller WebP copies of every blog image so pages load fast.
-// Input:  public/blog/<post>/<image>.(jpg|jpeg|png|webp)
+// Input:  public/blog/<post>/ and public/projects/<project>/ images (jpg, jpeg, png, webp)
 // Output: public/_img/blog/<post>/<image>-<width>.webp  +  src/data/images.json (sizes)
 // Runs automatically before `npm run dev` and `npm run build`. Skips images already done.
 import { readdir, stat, mkdir, writeFile, readFile } from "node:fs/promises";
@@ -8,7 +8,7 @@ import sharp from "sharp";
 import { fileURLToPath } from "node:url";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
-const SRC = join(ROOT, "public/blog");
+const SRCS = [join(ROOT, "public/blog"), join(ROOT, "public/projects")];
 const OUT = join(ROOT, "public/_img");
 const MANIFEST = join(ROOT, "src/data/images.json");
 const WIDTHS = [480, 800, 1200, 1600];
@@ -27,7 +27,8 @@ const old = JSON.parse(await readFile(MANIFEST, "utf8").catch(() => "{}"));
 const manifest = {};
 let made = 0;
 
-for (const file of await walk(SRC)) {
+const files = (await Promise.all(SRCS.map(walk))).flat();
+for (const file of files) {
   const url = "/" + relative(join(ROOT, "public"), file).split("\\").join("/");
   const { mtimeMs } = await stat(file);
   const prev = old[url];

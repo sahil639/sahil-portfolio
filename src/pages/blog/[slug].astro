@@ -1,14 +1,8 @@
 ---
 import { render } from "astro:content";
-import { YouTube } from "@astro-community/astro-embed-youtube";
-import { Tweet } from "@astro-community/astro-embed-twitter";
 import Base from "../../layouts/Base.astro";
 import Img from "../../components/Img.astro";
-import Gallery from "../../components/Gallery.astro";
-import Callout from "../../components/Callout.astro";
-import Figma from "../../components/Figma.astro";
-import LinkCard from "../../components/LinkCard.astro";
-import A from "../../components/A.astro";
+import { mdxComponents } from "../../lib/mdx-components.js";
 import { getPosts, niceDate, isoDate, wordsToMinutes } from "../../lib/posts.js";
 
 export async function getStaticPaths() {
@@ -35,7 +29,7 @@ const schema = {
   keywords: tags.join(", "),
   author: { "@type": "Person", name: "Sahil Pednekar", url: `${SITE}/` },
 };
-const components = { a: A, Img, Gallery, Callout, Figma, LinkCard, YouTube, Tweet };
+const components = mdxComponents;
 ---
 <Base title={`${title} — Sahil Pednekar`} description={summary || title} image={cover} type="article" wide current="blog">
   <Fragment slot="head">

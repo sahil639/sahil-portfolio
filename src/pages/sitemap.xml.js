@@ -1,12 +1,15 @@
 import { getPosts, isoDate } from "../lib/posts.js";
+import { getProjects } from "../lib/projects.js";
 
 const SITE = "https://sahildesign.xyz";
 
 export async function GET() {
   const posts = (await getPosts()).filter((p) => !p.data.draft);
+  const projects = (await getProjects()).filter((p) => !p.data.draft);
   const latest = posts[0] ? isoDate(posts[0].data.date) : undefined;
   const rows = [
     { loc: `${SITE}/` },
+    ...projects.map((p) => ({ loc: `${SITE}/projects/${p.id}/` })),
     { loc: `${SITE}/extras/` },
     { loc: `${SITE}/sandbox/` },
     { loc: `${SITE}/blog/`, lastmod: latest },

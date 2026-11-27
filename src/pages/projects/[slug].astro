@@ -1,0 +1,51 @@
+---
+import { render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Img from "../../components/Img.astro";
+import { getProjects } from "../../lib/projects.js";
+import { mdxComponents } from "../../lib/mdx-components.js";
+
+export async function getStaticPaths() {
+  const all = await getProjects();
+  return all.map((p) => {
+    const group = all.filter((x) => x.data.group === p.data.group);
+    const i = group.indexOf(p);
+    return { params: { slug: p.id }, props: { project: p, next: group[(i + 1) % group.length] } };
+  });
+}
+
+const { project, next } = Astro.props;
+const { title, summary, role, year, timeline, team, tags, cover, link, group, draft } = project.data;
+const { Content } = await render(project);
+const facts = [["Role", role], ["Year", year], ["Timeline", timeline], ["Team", team]].filter(([, v]) => v);
+const section = group === "more" ? "MORE FROM ME" : "PROJECTS";
+---
+<Base title={`${title} — Sahil Pednekar`} description={summary || title} image={cover} type="article" wide current="projects">
+  <article class="post project">
+    <a class="ulink back" href={group === "more" ? "/#more" : "/#projects"}>← {section}</a>
+    <p class="meta">{section}{draft && <span class="draft">DRAFT</span>}</p>
+    <h1>{title}</h1>
+    {summary && <p class="lede">{summary}</p>}
+    {facts.length > 0 && (
+      <dl class="facts">
+        {facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+      </dl>
+    )}
+    <div class="project-links">
+      {tags.map((t) => <span class="tag-chip">{t}</span>)}
+      {link && <a class="ulink visit" href={link} target="_blank" rel="noopener">VISIT ↗</a>}
+    </div>
+    {cover && <div class="post-cover"><Img src={cover} alt="" size="wide" eager /></div>}
+    <div class="prose">
+      <Content components={mdxComponents} />
+    </div>
+  </article>
+
+  {next && next.id !== project.id && (
+    <nav class="post-nav" aria-label="Next project">
+      <a class="next" href={`/projects/${next.id}/`}><span>NEXT →</span>{next.data.title}</a>
+    </nav>
+  )}
+
+  <p class="the-end">Like what you see? <a href="mailto:sahilpednekar332000@gmail.com">Send me an email →</a></p>
+</Base>

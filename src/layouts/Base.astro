@@ -5,7 +5,7 @@ interface Props {
   image?: string;
   type?: "website" | "article";
   wide?: boolean;
-  current?: "blog" | "sandbox" | "extras";
+  current?: "blog" | "sandbox" | "extras" | "projects";
 }
 const SITE = "https://sahildesign.xyz";
 const { title, description, image, type = "website", wide = false, current } = Astro.props;
@@ -57,7 +57,7 @@ const ownImage = Boolean(image);
       </a>
       <nav>
         <a class="ulink" href="/blog/" aria-current={current === "blog" ? "page" : undefined}>BLOG</a>
-        <a class="ulink" href="/#projects">PROJECTS</a>
+        <a class="ulink" href="/#projects" aria-current={current === "projects" ? "page" : undefined}>PROJECTS</a>
         <a class="ulink" href="/sandbox/" aria-current={current === "sandbox" ? "page" : undefined}>SANDBOX</a>
       </nav>
     </header>

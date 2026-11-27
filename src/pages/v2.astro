@@ -1,0 +1,181 @@
+---
+// Alternate landing page in a dark "developer site" style. Lives at /v2/. Not linked from the main nav.
+import { getProjects } from "../lib/projects.js";
+import { getPosts, niceDate } from "../lib/posts.js";
+import { getCollection } from "astro:content";
+
+const projects = await getProjects();
+const posts = await getPosts();
+const sandbox = (await getCollection("sandbox")).sort((a, b) => b.data.date - a.data.date);
+const featured = projects[0];
+const latestPost = posts[0];
+const tags = [...new Set(projects.flatMap((p) => p.data.tags))].sort();
+const count = (fn) => projects.filter(fn).length;
+
+const nav = [
+  ["B", "BLOG", "/blog/"],
+  ["P", "PROJECTS", "#projects"],
+  ["S", "SANDBOX", "/sandbox/"],
+  ["E", "EXTRAS", "/extras/"],
+  ["G", "GITHUB", "https://github.com/sahil639"],
+  ["X", "TWITTER", "https://x.com/sahil_pednekar3"],
+  ["R", "RESUME", "/sahil-pednekar-resume.pdf"],
+];
+const jobs = [
+  ["ONE CLICK", "2024–NOW", true],
+  ["CAPX", "2024–2026", true],
+  ["QUESTBOOK", "2023"],
+  ["DEHIDDEN", "2022–2023"],
+  ["ZELTA", "2021–2022"],
+];
+const contact = [
+  ["EMAIL", "The fastest way to reach me is <b>email</b>. I reply within a day or two.", "Want to work on something together?", "Send an email", "mailto:sahilpednekar332000@gmail.com"],
+  ["X / TWITTER", "I post <b>work in progress</b>, motion experiments and things I'm learning.", "What are you working on right now?", "Follow on X", "https://x.com/sahil_pednekar3"],
+  ["GITHUB", "Prototypes, <b>small tools</b> and the code behind this site live on GitHub.", "How is this site built?", "View GitHub", "https://github.com/sahil639"],
+  ["FARCASTER", "Also around on <b>Farcaster</b> as quminsoda.eth.", "gm, what are you designing today?", "Find me on Farcaster", "https://farcaster.xyz/quminsoda"],
+];
+const ext = (h) => h.startsWith("http");
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sahil Pednekar — Product Designer (v2)</title>
+  <meta name="description" content="Sahil Pednekar is a product designer working on mobile and web apps, with a focus on interaction details and motion.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/v2.css">
+</head>
+<body class="v2">
+  <header class="v2-nav">
+    <a class="v2-logo" href="/" aria-label="Home"><video src="/media/chick.mp4" autoplay muted loop playsinline aria-hidden="true"></video></a>
+    <nav>
+      {nav.map(([k, label, href]) => (
+        <a class="key" href={href} data-key={k} {...(ext(href) ? { target: "_blank", rel: "noopener" } : {})}><span>[{k}]</span> {label}</a>
+      ))}
+    </nav>
+  </header>
+
+  <main>
+    <section class="v2-hero frame">
+      <h1>Hi, I'm Sahil<br>Pednekar <span class="pixels" aria-hidden="true"></span></h1>
+      <p class="v2-lede">A 26-year-old designer. I started in product design, and these days I'm mostly into visual design and design engineering.</p>
+      <p class="v2-status"><i></i> CURRENTLY TAKING ON NEW WORK</p>
+    </section>
+
+    <section class="v2-split">
+      <div class="col">
+        <p class="slash">/ FEATURED PROJECT</p>
+        {featured && (
+          <div class="feature">
+            <figure class="fig">
+              <figcaption><span class="ico"></span>[ FIG. 1 ]<span class="ico sliders"></span></figcaption>
+              <canvas data-fig="burst"></canvas>
+            </figure>
+            <div class="feature-text">
+              <a class="feature-title" href={`/projects/${featured.id}/`}>{featured.data.title}: {featured.data.summary} <span>↗</span></a>
+              <p>{featured.data.role} · {featured.data.year}</p>
+              <p class="chips">{featured.data.tags.map((t) => <span>{t.toUpperCase()}</span>)}</p>
+              <a class="pill" href="#projects">All projects</a>
+            </div>
+          </div>
+        )}
+      </div>
+      <div class="col">
+        <p class="slash">/ LATEST WRITING</p>
+        <div class="feature">
+          <figure class="fig">
+            <figcaption><span class="ico"></span>[ FIG. 2 ]<span class="ico sliders"></span></figcaption>
+            <canvas data-fig="orbits"></canvas>
+          </figure>
+          <div class="feature-text">
+            {latestPost
+              ? <a class="feature-title" href={`/blog/${latestPost.id}/`}>{latestPost.data.title} <span>↗</span></a>
+              : <a class="feature-title" href="/blog/">Notes on design, motion and coffee — first post soon <span>↗</span></a>}
+            <p>{latestPost ? niceDate(latestPost.data.date) : "BLOG"}</p>
+            <a class="pill" href="/blog/">Read the blog</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="v2-ticker" aria-label="Experience">
+      <p class="slash">/ EXPERIENCE</p>
+      <div class="ticker"><div class="ticker-track">
+        {[0, 1].map((dup) => (
+          <div class="ticker-set" aria-hidden={dup ? "true" : undefined}>
+            {jobs.map(([name, years, now]) => <span class="tick">{now && <i></i>}{name}: <b>{years}</b></span>)}
+            <span class="tick">EMAIL: <b>SAHILPEDNEKAR332000@GMAIL.COM</b></span>
+          </div>
+        ))}
+      </div></div>
+    </section>
+
+    <section class="v2-list" id="projects">
+      <h2 class="big">Projects<sup>({projects.length})</sup></h2>
+      <div class="list-grid">
+        <aside class="filters-panel">
+          <p class="slash row">/ FILTER <button type="button" class="clear">CLEAR FILTERS</button></p>
+          <div class="filter-cols">
+            <fieldset>
+              <legend><span class="caret">⌄</span><span class="folder"></span>Type</legend>
+              <label><input type="checkbox" data-filter="group" value="work"> Projects ({count((p) => p.data.group === "work")})</label>
+              <label><input type="checkbox" data-filter="group" value="more"> More from me ({count((p) => p.data.group === "more")})</label>
+            </fieldset>
+            <fieldset>
+              <legend><span class="caret">⌄</span><span class="folder"></span>Topic</legend>
+              {tags.map((t) => <label><input type="checkbox" data-filter="tag" value={t}> {t} ({count((p) => p.data.tags.includes(t))})</label>)}
+            </fieldset>
+          </div>
+          <figure class="fig small">
+            <figcaption><span class="ico"></span>[ FIG. 3 ]<span class="ico sliders"></span></figcaption>
+            <canvas data-fig="wave"></canvas>
+          </figure>
+        </aside>
+        <div class="rows">
+          <p class="slash cols"><span>/ YEAR</span><span>/ NAME</span></p>
+          {projects.map((p) => (
+            <a class="row-item" href={`/projects/${p.id}/`} data-group={p.data.group} data-tags={p.data.tags.join("|")}>
+              <span class="date"><i></i>{p.data.year}</span>
+              <span class="name">{p.data.title}</span>
+              <span class="kind">{p.data.group === "more" ? "SIDE PROJECT" : p.data.role.toUpperCase()}</span>
+            </a>
+          ))}
+          <p class="none" hidden>Nothing matches those filters.</p>
+          <div class="more-cards">
+            <a class="more-card" href="/sandbox/"><span>Sandbox</span><small>{sandbox.length} experiments</small></a>
+            <a class="more-card" href="/extras/"><span>Extras</span><small>Graphics &amp; posters</small></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="v2-help">
+      <h2 class="big">Say hello<sup>({contact.length})</sup></h2>
+      <div class="help-grid">
+        {contact.map(([label, text, example, cta, href]) => (
+          <div class="help">
+            <p class="slash">/ {label}</p>
+            <p class="help-text" set:html={text} />
+            <p class="example"><i></i>EXAMPLE: <span class="type" data-text={example.toUpperCase()}>{example.toUpperCase()}</span></p>
+            <a class="pill wide" href={href} {...(ext(href) ? { target: "_blank", rel: "noopener" } : {})}>{cta}</a>
+          </div>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <footer class="v2-foot">
+    <span>© 2026 SAHIL PEDNEKAR</span>
+    <span>QUMINSODA.ETH</span>
+    <a href="/">← CLASSIC VERSION</a>
+  </footer>
+
+  <script is:inline src="/js/v2.js" defer></script>
+</body>
+</html>

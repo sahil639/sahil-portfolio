@@ -80,6 +80,8 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .intro p:first-of-type { margin-top: 24px; }
 .intro b { font-weight: 400; color: var(--text); }
 .intro em { color: var(--text); }
+.intro a { color: inherit; text-decoration: underline; text-decoration-color: #3d3d3d; text-underline-offset: 3px; transition: color .2s, text-decoration-color .2s; }
+.intro a:hover { color: var(--text); text-decoration-color: var(--text); }
 
 .hero-video {
   position: absolute;
@@ -357,6 +359,14 @@ a.tag:hover { color: var(--text); }
 .post-nav .next { grid-column: 2; text-align: right; }
 
 
+
+/* Project pages */
+.project .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 28px 0 0; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.project .facts dt { font-size: 11px; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+.project .facts dd { margin: 6px 0 0; font-size: 14px; line-height: 1.4; color: var(--text); }
+.project-links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 16px; }
+.project-links .visit { min-width: 0; margin-left: auto; font-size: 14px; }
+
 /* ---------- Work cards (Projects, More from me, Sandbox) ---------- */
 .more .section-title { color: var(--dim); }
 .extras .section-title { color: #c38bff; }
@@ -375,6 +385,33 @@ a.tag:hover { color: var(--text); }
 .work-card .role { margin-right: 4px; font-size: 12px; letter-spacing: .3px; color: #c4c4c4; }
 .tag-chip { padding: 2px 7px; border: 1px solid var(--line); border-radius: 4px; font-size: 11px; line-height: 1.4; letter-spacing: .3px; color: var(--muted); }
 .extras .btn-line, .sandbox .btn-line { margin-top: 10px; }
+
+
+/* More from me — simple list */
+.more-head { display: flex; align-items: center; gap: 18px; margin-top: 72px; }
+.more-head h2 { font-size: 22px; line-height: 1.3; letter-spacing: .1px; color: var(--text); }
+.stamp {
+  position: relative; display: block; width: 64px; height: 76px; flex: none;
+  padding: 4px; border: 3px dotted #000; background: #f3e9d6; background-clip: border-box;
+}
+.stamp span {
+  position: relative; display: block; height: 100%; padding: 4px 5px;
+  background: repeating-linear-gradient(0deg, transparent 0 5px, rgba(255,255,255,.08) 5px 6px), linear-gradient(#9b2346, #5a0f26);
+  font: 700 12px/1 Georgia, serif; color: #f3e9d6;
+}
+.stamp span::after {
+  content: ""; position: absolute; left: 50%; bottom: 12px; width: 26px; height: 26px; transform: translateX(-50%);
+  border-radius: 50%; background: repeating-conic-gradient(#f9b4b4 0 8deg, transparent 8deg 30deg);
+  -webkit-mask: radial-gradient(circle, #000 0 60%, transparent 61%); mask: radial-gradient(circle, #000 0 60%, transparent 61%);
+}
+.more-list { display: flex; flex-direction: column; gap: 30px; margin: 30px 0 0; padding: 0; list-style: none; }
+.more-link { display: inline-flex; align-items: center; gap: 12px; }
+.more-link img { width: 24px; height: 24px; border-radius: 6px; outline: 1px solid #333; outline-offset: 1px; }
+.more-name { font-size: 18px; line-height: 1.3; color: var(--text); border-bottom: 1.5px dotted #3d6bff; padding-bottom: 2px; transition: color .2s, border-color .2s; }
+.more-arrow { font-size: 13px; color: var(--muted); transition: transform .2s, color .2s; }
+.more-link:hover .more-name { color: var(--mint); border-bottom-color: var(--mint); }
+.more-link:hover .more-arrow { color: var(--mint); transform: translate(2px, -2px); }
+.more-list p { margin-top: 10px; font-size: 16px; line-height: 1.6; color: var(--muted); }
 
 /* Extras strip on home */
 .extras-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 16px; }
@@ -447,6 +484,7 @@ a.tag:hover { color: var(--text); }
   .lc-img { width: 80px; height: 80px; }
   .post-nav { grid-template-columns: 1fr; }
   .post-nav .next { grid-column: auto; }
+  .project .facts { grid-template-columns: 1fr 1fr; }
   .extras-strip { grid-template-columns: repeat(2, 1fr); }
   .extras-strip img:nth-child(n+3) { display: none; }
   .extras-grid { columns: 2; }

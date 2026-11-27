@@ -28,4 +28,25 @@ const sandbox = defineCollection({
   }),
 });
 
-export const collections = { blog, sandbox };
+// Projects: one .mdx case study per project in /content/projects/. Images in public/projects/<project>/.
+const projects = defineCollection({
+  loader: glob({ base: "./content/projects", pattern: "**/[^_]*.{md,mdx}" }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string().default(""),
+    role: z.string().default(""),
+    year: z.string().default(""),
+    timeline: z.string().optional(),
+    team: z.string().optional(),
+    tags: z.array(z.string()).default([]),
+    cover: z.string().optional(),
+    thumbnail: z.string().optional(),
+    icon: z.string().optional(), // small square app icon, used in the More from me list
+    link: z.string().optional(),
+    group: z.enum(["work", "more"]).default("work"), // "work" = Projects, "more" = More from me
+    order: z.number().default(99),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { blog, sandbox, projects };
